@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Mensagem de SLA</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        label, input, textarea { display: block; margin-top: 10px; width: 100%; }
+        button { margin-top: 10px; padding: 10px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #resultado { margin-top: 20px; white-space: pre-wrap; background: #f4f4f4; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Gerador de Mensagem de SLA</h2>
+    <label for="analista">Nome do Analista:</label>
+    <input type="text" id="analista" placeholder="Digite o nome do analista">
+    
+    <label for="chamado">ID do Chamado:</label>
+    <input type="text" id="chamado" placeholder="Digite o ID do chamado">
+    
+    <label for="titulo">Título do Chamado:</label>
+    <input type="text" id="titulo" placeholder="Digite o título do chamado">
+    
+    <button onclick="gerarMensagem()">Gerar Mensagem</button>
+    
+    <h3>Mensagem Gerada:</h3>
+    <div id="resultado"></div>
+    <button onclick="copiarMensagem()">Copiar Mensagem</button>
+
+    <script>
+        function gerarMensagem() {
+            let analista = document.getElementById("analista").value;
+            let chamado = document.getElementById("chamado").value;
+            let titulo = document.getElementById("titulo").value;
+            
+            let mensagem = `Olá ${analista},\n\n`
+                + `Identificamos que o chamado **${chamado} - ${titulo}** está com o SLA estourado. Poderia verificar se:\n\n`
+                + `1. Podemos ajustar o SLA para que ele não fique estourado?\n`
+                + `2. Há alguma pendência do cliente que possa estar impactando a resolução?\n\n`
+                + `Caso precise de alguma ação nossa ou do cliente, me avise para que possamos agilizar o andamento.\n\n`
+                + `Aguardo seu retorno.`;
+            
+            document.getElementById("resultado").innerText = mensagem;
+        }
+
+        function copiarMensagem() {
+            let resultado = document.getElementById("resultado").innerText;
+            navigator.clipboard.writeText(resultado).then(() => {
+                alert("Mensagem copiada para a área de transferência!");
+            }).catch(err => {
+                console.error("Erro ao copiar mensagem", err);
+            });
+        }
+    </script>
+</body>
+</html>
